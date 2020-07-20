@@ -12,6 +12,22 @@ function getServerData(url) {
     )
     };
 
-getServerData("http://localhost:3000/users").then(
-    data => console.log(data)
-);    
+   document.querySelector("#getDataBtn").addEventListener("click", function(){
+    getServerData("http://localhost:3000/users").then(
+        data => fillDataTable(data, "UserTable")
+    );  
+   })
+  
+   //Fill table with Server data.
+
+   function fillDataTable(data, tableID){
+       let table= document.querySelector('#${tableID}');
+       if (!table){
+           console.error('Table "${tableID}" is nout found.');
+           return;
+       }
+       let tBody = table.querySelector("tbody");
+       for (let row of data){
+           console.log(row);
+       }
+   }
