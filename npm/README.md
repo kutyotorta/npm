@@ -1,2 +1,0 @@
-# npm
-Admin felület
