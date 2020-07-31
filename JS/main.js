@@ -12,11 +12,13 @@ function getServerData(url) {
     )
 };
 
-document.querySelector("#getDataBtn").addEventListener("click", function(){
+function startGetUsers(){
     getServerData("http://localhost:3000/users").then(
         data => fillDataTable(data, "UserTable")
     );  
-})
+}
+
+document.querySelector("#getDataBtn").addEventListener("click", startGetUsers)
   
 //Fill table with Server data. (Táblázat feltöltése a szerverről származó adattal)
 function fillDataTable(data, tableID){
@@ -35,6 +37,8 @@ function fillDataTable(data, tableID){
             td.innerHTML = row[k];
             tr.appendChild(td);
         }
+        let btnGroup = createBtnGroup();
+        tr.appendChild(btnGroup);
         tBody.appendChild(tr);   
     }
 }
@@ -45,4 +49,39 @@ function createAnyElement(name, attributes){
         element.setAttribute(k, attributes[k]);
     }
     return element;
+}
+
+//Gombok létrehozásához készítek egy függvényt
+function createBtnGroup(){
+    let group = createAnyElement ("div", {class: "btn btn-group"});
+    let infoBtn = createAnyElement ("button", {class: "btn btn-info", onclick: "getInfo(this)"} );
+    infoBtn.innerHTML = '<i class="fa fa-refresh" aria-hidden="true"></i>';
+    let delBtn = createAnyElement ("button", {class: "btn btn-danger", onclick: "delRow(this)"} );
+    delBtn.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+
+    group.appendChild(infoBtn);
+    group.appendChild(delBtn);
+
+    let td = createAnyElement("td");
+    td.appendChild(group);
+    return td;
+}
+
+function delRow(btn) {
+    let tr = btn.parentElement.parentElement.parentElement;
+    let id = tr.querySelector("td:first-child").innerHTML;
+    let fetchOptions = {
+        method : "DELETE",
+        mode : "cors",
+        cache : "no-cache"
+    };
+
+    fetch(`http://localhost:3000/users/${id}`, fetchOptions).then(
+        resp => resp.json(),
+        err => console.error(err)
+    ).then(
+        data => {
+            startGetUsers();
+        }
+    );
 }
