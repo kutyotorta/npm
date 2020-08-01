@@ -1,3 +1,6 @@
+//Keys of users
+let keys = ["id" , "name" , "email"];
+
 // Get data from the Server.
 function getServerData(url) {
     let fetchOptions = {
@@ -30,13 +33,14 @@ function fillDataTable(data, tableID){
     }
 
     //Add new user row to the table
-    let newRow = newUserRow();
-    table.appendChild(newRow);
-
     let tBody = table.querySelector("tbody");
+    tBody.innerHTML = '';
+    let newRow = newUserRow();
+    tBody.appendChild(newRow);  
+
     for (let row of data){
         let tr = createAnyElement("tr");
-        for (let k in row){
+        for (let k of keys){
             let td = createAnyElement("td");
             td.innerHTML = row[k];
             tr.appendChild(td);
@@ -93,7 +97,7 @@ function delRow(btn) {
 //Create news user
 function newUserRow(row){
     let tr = createAnyElement("tr");
-    for (let k in {id:'', name: '', email:'' }){
+    for (let k of keys){
         let td =createAnyElement("td");
         let input = createAnyElement("input", {
             class: "form-control",
@@ -118,8 +122,23 @@ function newUserRow(row){
     function createUser(btn){
         let tr = btn.parentElement.parentElement;
         let data = getRowData(tr);
+        delete data.id;
+        let fetchOptions = {
+            method:"POST",
+            mode:"cors",
+            cache:"no-cache",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
         
-        console.log(data);
+        fetch(`http://localhost:3000/users`, fetchOptions).then(
+            resp => resp.json(),
+            err => console.error(err)
+        ).then(
+            data = console.log(data)
+        );
     }
 
 function getRowData(tr){
