@@ -1,10 +1,26 @@
 {
   "users": [
     {
+      "id": 1,
+      "name": "Big Tom",
+      "email": "bigtom@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Little Jimmy Tom",
+      "email": "littlejimmy@gmail.com"
+    },
+    {
       "id": 4,
       "name": "Cuki Laci",
       "email": "cukilaci@gmail.com"
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "userId": 1
+    }
+  ]
 }

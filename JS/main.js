@@ -29,6 +29,10 @@ function fillDataTable(data, tableID){
         return;
     }
 
+    //Add new user row to the table
+    let newRow = newUserRow();
+    table.appendChild(newRow);
+
     let tBody = table.querySelector("tbody");
     for (let row of data){
         let tr = createAnyElement("tr");
@@ -84,4 +88,46 @@ function delRow(btn) {
             startGetUsers();
         }
     );
+}
+
+//Create news user
+function newUserRow(row){
+    let tr = createAnyElement("tr");
+    for (let k in {id:'', name: '', email:'' }){
+        let td =createAnyElement("td");
+        let input = createAnyElement("input", {
+            class: "form-control",
+            name: k
+        });
+       td.appendChild(input);
+       tr.appendChild(td);
+    }
+    let newBtn= createAnyElement("button", {
+        class: "btn- btn-succes",
+        onclick: "createUser(this)"
+    });
+    newBtn.innerHTML = '<i class="fa fa-plus" aria-hidden="true"></i>';
+    let td = createAnyElement("td");
+    td.appendChild(newBtn); 
+    tr.appendChild(td);
+
+    return tr;
+
+}
+
+    function createUser(btn){
+        let tr = btn.parentElement.parentElement;
+        let data = getRowData(tr);
+        
+        console.log(data);
+    }
+
+function getRowData(tr){
+    let inputs = tr.querySelectorAll("input.form-control");
+    let data = {};
+    for (let i = 0; i < inputs.length; i++){
+    data[inputs[i].name] = inputs[i].value;
+    }
+
+    return(data);
 }
