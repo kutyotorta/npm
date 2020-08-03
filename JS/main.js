@@ -85,7 +85,7 @@ function createBtnGroup(){
 
 function delRow(btn) {
     let tr = btn.parentElement.parentElement.parentElement;
-    let id = tr.querySelector("td:first-child").innerHTML;
+    let id = tr.querySelector("td:first-child input").value;    
     let fetchOptions = {
         method : "DELETE",
         mode : "cors",
