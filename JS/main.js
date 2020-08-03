@@ -115,7 +115,7 @@ function newUserRow(row){
        tr.appendChild(td);
     }
     let newBtn= createAnyElement("button", {
-        class: "btn- btn-succes",
+        class: "btn btn-success",
         onclick: "createUser(this)"
     });
     newBtn.innerHTML = '<i class="fa fa-plus" aria-hidden="true"></i>';
@@ -127,33 +127,33 @@ function newUserRow(row){
 
 }
 
-    function createUser(btn){
-        let tr = btn.parentElement.parentElement;
-        let data = getRowData(tr);
-        delete data.id;
-        let fetchOptions = {
-            method:"POST",
-            mode:"cors",
-            cache:"no-cache",
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        };
-        
-        fetch(`http://localhost:3000/users`, fetchOptions).then(
-            resp => resp.json(),
-            err => console.error(err)
-        ).then(
-            data = console.log(data)
-        );
-    }
+function createUser(btn){
+    let tr = btn.parentElement.parentElement;
+    let data = getRowData(tr);
+    delete data.id;
+    let fetchOptions = {
+        method:"POST",
+        mode:"cors",
+        cache:"no-cache",
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+    
+    fetch(`http://localhost:3000/users`, fetchOptions).then(
+        resp => resp.json(),
+        err => console.error(err)
+    ).then(
+        data = console.log(data)
+    );
+}
 
 function getRowData(tr){
     let inputs = tr.querySelectorAll("input.form-control");
     let data = {};
     for (let i = 0; i < inputs.length; i++){
-    data[inputs[i].name] = inputs[i].value;
+        data[inputs[i].name] = inputs[i].value;
     }
 
     return(data);
