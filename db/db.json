@@ -1,13 +1,9 @@
 {
   "users": [
     {
-      "name": "Era",
-      "email": "era@gmail.com",
       "id": 5
     },
     {
-      "name": "Netfisz",
-      "email": "netfisz@gmail.com",
       "id": 6
     },
     {
@@ -44,6 +40,9 @@
       "name": "iaedj",
       "email": "ksdj",
       "id": 13
+    },
+    {
+      "id": 14
     }
   ],
   "comments": []
